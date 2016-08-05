@@ -1,10 +1,13 @@
 'use strict'
 
 import Project from './views/project/Index.vue'
+import ProjectInfo from './views/project/ProjectInfo.vue'
+import UpFile from './views/project/UpFile.vue'
+
 import Index from './views/Index.vue'
 import LogInfo from './views/worklog/LogInfo.vue'
 import LogDetail from './views/worklog/LogDetail.vue'
-import ProjectInfo from './views/project/ProjectInfo.vue'
+
 import CService from './views/cservice/Index.vue'
 import NewCSWork from './views/cservice/NewCSWork.vue'
 import WorkFlow from './views/workflow/Index.vue'
@@ -35,6 +38,11 @@ export default function(router) {
             name: 'proinfo',
             auth: true,
             component: ProjectInfo
+        },
+        '/project/upfile/:id':{
+            name:'upfile',
+            auth:true,
+            component:UpFile
         },
         //客服
         '/cservice':{
