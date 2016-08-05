@@ -1,5 +1,5 @@
 <template>
-	<div class="page project">
+	<div class="page project" transition="app">
 		<x-header :left-options="{showBack:true,backText:'返回'}">
 			<p>项目信息</p>
 			<div slot="right">

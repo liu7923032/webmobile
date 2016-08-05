@@ -14,97 +14,108 @@
 				文档列表
 			</tab-item>
 		</tab>
-		<div class="weui-tab-bd">
-			<div v-show="selectIndex == 0">
-				<group :title="ProjectName">
-					<cell title="医院名称">
-						<div slot="value">
-							<span style="color: green">{{HospName}}</span>
-						</div>
-					</cell>
-					<cell title="产品线">
-						<div slot="value">
-							<span style="color: green">{{LineName}}</span>
-						</div>
-					</cell>
-					<cell title="项目经理">
-						<div slot="value">
-							<span style="color: green">{{UserName}}</span>
-						</div>
-					</cell>
-					<cell title="项目金额">
-						<div slot="value">
-							<span style="color: green">{{ProjectMoney}}</span>
-						</div>
-					</cell>
-					<cell title="项目类型">
-						<div slot="value">
-							<span style="color: green">{{TypeName}}</span>
-						</div>
-					</cell>
-					<cell title="项目属性">
-						<div slot="value">
-							<span style="color: green">{{AttrName}}</span>
-						</div>
-					</cell>
-					<cell title="项目状态">
-						<div slot="value">
-							<span style="color: green">{{StatusName}}</span>
-						</div>
-					</cell>
-					<cell title="项目阶段">
-						<div slot="value">
-							<span style="color: green">{{StageName}}</span>
-						</div>
-					</cell>
-					<cell title="安装数量">
-						<div slot="value">
-							<span style="color: green">{{InstallUnit}}</span>
-						</div>
-					</cell>
-					<cell title="入场时间">
-						<div slot="value">
-							<span style="color: green">{{EnterDate | substr 10}}</span>
-						</div>
-					</cell>
-					<cell title="验收时间">
-						<div slot="value">
-							<span style="color: green">{{DocDate | substr 10}}</span>
-						</div>
-					</cell>
-				</group>
-			</div>
-			<div v-show="selectIndex == 1">
-				<group title="上传文档">
-					<popup-picker title="文档类型"  :data="docTypeList" :value.sync="docType"></popup-picker>
-					<datetime :value.sync="docDate" format="YYYY-MM-DD" title="签字日期" confirm-text="完成" cancel-text="取消"></datetime>
-					<cell>
-						<uploader slot="after-title" :count="fileCount" :maxlength="1" @select-file="chooseImg">
-							<span slot="title">文件上传</span>
-							<uploader-files slot="uploader-files" v-show="showfile" :image-url="imgPath">
-							</uploader-files>
-						</uploader>
-					</cell>
-					<x-textarea :max="200" :row="6" :height="150" :value.sync="memo" placeholder="文档备注信息"></x-textarea>
-					<box gap="10px 10px">
-						<x-button @click="saveProDoc"  type="primary">
-							上传文档
-						</x-button>
+		<swiper :index.sync="selectIndex" :dots-class="custom" height="521px" :show-dots="false">
+			<swiper-item>
+				<scroller lock-x scrollbar-y :prevent-default="false">
+					<div style="padding-bottom:120px;">
+						<group :title="ProjectName">
+							<cell title="医院名称">
+								<div slot="value">
+									<span style="color: green">{{HospName}}</span>
+								</div>
+							</cell>
+							<cell title="产品线">
+								<div slot="value">
+									<span style="color: green">{{LineName}}</span>
+								</div>
+							</cell>
+							<cell title="项目经理">
+								<div slot="value">
+									<span style="color: green">{{UserName}}</span>
+								</div>
+							</cell>
+							<cell title="项目金额">
+								<div slot="value">
+									<span style="color: green">{{ProjectMoney}}</span>
+								</div>
+							</cell>
+							<cell title="项目类型">
+								<div slot="value">
+									<span style="color: green">{{TypeName}}</span>
+								</div>
+							</cell>
+							<cell title="项目属性">
+								<div slot="value">
+									<span style="color: green">{{AttrName}}</span>
+								</div>
+							</cell>
+							<cell title="项目状态">
+								<div slot="value">
+									<span style="color: green">{{StatusName}}</span>
+								</div>
+							</cell>
+							<cell title="项目阶段">
+								<div slot="value">
+									<span style="color: green">{{StageName}}</span>
+								</div>
+							</cell>
+							<cell title="安装数量">
+								<div slot="value">
+									<span style="color: green">{{InstallUnit}}</span>
+								</div>
+							</cell>
+							<cell title="入场时间">
+								<div slot="value">
+									<span style="color: green">{{EnterDate | substr 10}}</span>
+								</div>
+							</cell>
+							<cell title="验收时间">
+								<div slot="value">
+									<span style="color: green">{{DocDate | substr 10}}</span>
+								</div>
+							</cell>
+						</group>
+					</div>
+				</scroller>
+			</swiper-item>
+			<swiper-item>
+				<scroller lock-x scrollbar-y :prevent-default="false">
+					<div style="padding-bottom:120px;">
+						<group title="上传文档">
+							<popup-picker title="文档类型" :data="docTypeList" :value.sync="docType"></popup-picker>
+							<datetime :value.sync="docDate" format="YYYY-MM-DD" title="签字日期" confirm-text="完成" cancel-text="取消"></datetime>
+							<cell>
+								<uploader slot="after-title" :count="fileCount" :maxlength="1" @select-file="chooseImg">
+									<span slot="title">文件上传</span>
+									<uploader-files slot="uploader-files" v-show="showfile" :image-url="imgPath">
+									</uploader-files>
+								</uploader>
+							</cell>
+							<x-textarea :max="200" :row="6" :height="150" :value.sync="memo" placeholder="文档备注信息"></x-textarea>
+							<box gap="10px 10px">
+								<x-button @click="saveProDoc" type="primary">
+									上传文档
+								</x-button>
+							</box>
+						</group>
+					</div>
 
-					</box>
-				</group>
-			</div>
-			<div v-show="selectIndex == 2">
-				<group title="已上传文档">
-					<cell v-for="item in docList" :title="item.DictName" track-by="$index" :value="item.DocDate | substr 10">
-						<div slot="after-title" class="app_ok" v-if="item.ApproveStatus == 'Y'">已审</div>
-						<div slot="after-title" class="app_cancel" v-if="item.ApproveStatus == 'N'">被拒</div>
-						<div slot="after-title" class="app_wait" v-if="!item.ApproveStatus">待审</div>
-					</cell>
-				</group>
-			</div>
-		</div>
-
+				</scroller>
+			</swiper-item>
+			<swiper-item>
+				<scroller lock-x scrollbar-y :prevent-default="false">
+					<div style="padding-bottom:120px;">
+						<group title="已上传文档">
+							<cell v-for="item in docList" :title="item.DictName" track-by="$index" :value="item.DocDate | substr 10">
+								<div slot="after-title" class="app_ok" v-if="item.ApproveStatus == 'Y'">已审</div>
+								<div slot="after-title" class="app_cancel" v-if="item.ApproveStatus == 'N'">被拒</div>
+								<div slot="after-title" class="app_wait" v-if="!item.ApproveStatus">待审</div>
+							</cell>
+						</group>
+					</div>
+				</scroller>
+			</swiper-item>
+		</swiper>
 	</div>
 
 </template>
@@ -126,7 +137,9 @@
  import Card from 'vux-components/card'
  import Box from 'vux-components/box'
  import Search from 'vux-components/search'
-
+ import Swiper from 'vux-components/swiper'
+ import SwiperItem from 'vux-components/swiper-item'
+ 
  import {Tab,TabItem} from 'vux-components/tab'
 
 // import	{ XHeader,Group,Cell,Tab, TabItem ,Scroller,PopupPicker,Datetime,XInput,XTextarea,Box,XButton} from 'vux-components'
@@ -169,10 +182,7 @@ import wxutils from '../utils/wxUtils'
 		route:{
 			data(transition){
 				this.ProjectCode=transition.to.params.id;
-				if(this.docTypeList[0].length==1){
-					//加载文档信息
-					this.loadDocs();
-				}
+				
 				//加载基本信息
 				this.loadInfo();
 				//重新进入后初始化数据
@@ -191,7 +201,8 @@ import wxutils from '../utils/wxUtils'
 			XInput,
 			XTextarea,
 			Uploader, UploaderFiles, UploaderFile,
-			Box,XButton
+			Box,XButton,
+			Swiper,SwiperItem
 		},
 		ready () {
 			common.initWX();
@@ -208,6 +219,7 @@ import wxutils from '../utils/wxUtils'
 					if(!project){
 						return false;
 					}
+					console.log(project);
 					this.ProjectName=project.ProjectName;
 					this.InstallUnit=project.InstallUnit;
 					this.EnterDate=project.EnterDate;
@@ -229,6 +241,10 @@ import wxutils from '../utils/wxUtils'
 					 if(this.docList.length==0){
 						this.loadDocList();
 					 }
+					 if(this.docTypeList[0].length==1){
+						//加载文档信息
+						this.loadDocs();
+					 }
 				},(error)=>{
 
 				});
@@ -240,10 +256,11 @@ import wxutils from '../utils/wxUtils'
 					//调用远程,加载该项目的基本信息i
 				_this.$http.get(url).then((success)=>{
 					var doclist=success.data;
-					if(!doclist){
+					if(doclist.length==0){
 						return false;
 					}
-				  	var tempList =doclist.filter((item)=>{
+
+				  	var tempList = doclist.filter((item)=>{
 						if(item.DictParam.length>10){
 							var curStageCode=JSON.parse(item.DictParam).StageCode;
 							return curStageCode==_this.StageNo
@@ -253,7 +270,6 @@ import wxutils from '../utils/wxUtils'
 					}).map((item)=>{
 						return item.DictName;
 					});
-					console.log([tempList])
 					tempList.forEach(u=>{
 						_this.docTypeList[0].push(u);
 					})
@@ -329,21 +345,30 @@ import wxutils from '../utils/wxUtils'
 </script>
 
 <style scoped>
-	.app_ok{
-		color:green;
-		float:right;
-		margin-right:20px;
+	.app_ok {
+		color: green;
+		float: right;
+		margin-right: 20px;
 	}
-
-	.app_wait{
-		color:orange;
-		float:right;
-		margin-right:20px;
+	
+	.app_wait {
+		color: orange;
+		float: right;
+		margin-right: 20px;
 	}
-
-	.app_cancel{
-		color:red;
-		float:right;
-		margin-right:20px;
+	
+	.app_cancel {
+		color: red;
+		float: right;
+		margin-right: 20px;
+	}
+	
+	.vux-swiper {
+		overflow: auto;
+	}
+	
+	.custom {
+		overflow: auto;
+		height: 100%;
 	}
 </style>

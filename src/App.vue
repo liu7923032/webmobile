@@ -10,7 +10,7 @@
 
         <loading :show.sync="loading.show" :text="loading.text">
         </loading>
-        
+
         <dialog :show.sync="showDialog">
             <p>{{dialog.text}}</p>
         </dialog>
@@ -75,9 +75,9 @@
       }
     }
 </script>
-<style  lang="less">
-
+<style lang="less">
     /*@import '~vux/dist/vux.css';*/
+    
     @import '~vux/src/styles/reset';
     /*当你设置一个元素为 box-sizing: border-box; 时，此元素的内边距和边框不再会增加它的宽度*/
     
@@ -97,7 +97,6 @@
     body,
     .page {
         background-color: #FBF9FE;
-        
         /*background-color: #F5E1BA;*/
     }
     /*最底层布局*/
@@ -118,7 +117,7 @@
         right: 0;
         bottom: 0;
         left: 0;
-        overflow: none;
+        overflow: hidden;
     }
     
     .space {
@@ -178,7 +177,12 @@
     .weui-tab-bd {
         height: 90%;
         overflow: auto;
-        padding-bottom: 50px;
+        padding-bottom: 25px;
+    }
+    
+    .tab-swiper {
+        background-color: #fff;
+        height: 100%;
     }
     /*a{
        text-decoration:none;
