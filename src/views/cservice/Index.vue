@@ -15,23 +15,23 @@
                 已完结
             </tab-item>
         </tab>
-        <div class="weui-tab-bd">
-            <div v-show="selectIndex == 0">
-                <group title="待处理">
+        <swiper :index.sync="selectIndex" :dots-class="custom" height="521px" :show-dots="false">
+			<swiper-item class="swiperItem">
+				  <group title="待处理">
                     <cell v-for="item in waitData" is-link :title="item.HospName" v-link="{path:'/cservice/newcswork',query:{'dispNo':item.DispNo}}">
                     </cell>
                 </group>
-            </div>
-            <div v-show="selectIndex == 1">
-                <group title="流程中">
+			</swiper-item>
+			<swiper-item class="swiperItem">
+				 <group title="流程中">
                 </group>
-            </div>
-            <div v-show="selectIndex == 2">
-                <group title="已完结">
+			</swiper-item>
+            <swiper-item class="swiperItem">
+				 <group title="已完结">
                 </group>
-            </div>
-          
-        </div>
+			</swiper-item>
+		</swiper>
+       
     </div>
 </template>
 
@@ -43,7 +43,8 @@
     import Cell from 'vux-components/cell'
     // import Card from 'vux-components/card'
 	import {Tab,TabItem} from 'vux-components/tab'
-
+    import Swiper from 'vux-components/swiper'
+	import SwiperItem from 'vux-components/swiper-item'
 
 // import	{ XHeader,Group,Cell,Tab, TabItem } from 'vux-components'
 
@@ -72,7 +73,9 @@
             Group,
             Cell,
             Tab,
-            TabItem
+            TabItem,
+            Swiper,
+            SwiperItem
         },
 
     }

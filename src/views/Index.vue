@@ -4,19 +4,19 @@
         首页
        <a slot="right" href="javascript:void(0)" @click.prevent="scan" >扫描</a>
     </x-header>
-    <div class="weui-tab-bd">
-      <div v-show="selectIndex==0">
-          <!--content slot-->
-          <div class="box2">
+
+    <swiper :index.sync="selectIndex" :dots-class="custom" height="521px" :show-dots="false">
+			<swiper-item class="swiperItem">
+				 <div class="box2">
              <card v-for="item in msgItems" :header="{title:item.MsgTitle}" >
                 <div slot="content"  class="card_bd">
                     {{item.MsgContent}}
                 </div>
             </card>
           </div>
-      </div>
-      <div v-show="selectIndex==1">
-        <flexbox :gutter="0" wrap="wrap">
+			</swiper-item>
+			<swiper-item class="swiperItem">
+				<flexbox :gutter="0" wrap="wrap">
           <flexbox-item :span="1/3" v-for="item in items" v-link="'/'+item.link">
             <div class="grid">
               <img :src="item.image" alt="">
@@ -24,9 +24,9 @@
             </div>
           </flexbox-item>
         </flexbox>
-      </div>
-      <div v-show="selectIndex==2">
-        <Group title="个人基本信息">
+			</swiper-item>
+      <swiper-item class="swiperItem">
+          <Group title="个人基本信息">
           <cell title="工号">
             <div slot="value">
               <span style="color: green">{{user.GongHao}}</span>
@@ -58,22 +58,26 @@
             </div>
           </cell>
         </Group>
-      </div>
-    </div>
-    <tabbar>
-      <tabbar-item selected @click="this.selectIndex=0">
+      </swiper-item>
+		</swiper>
+
+    <tabbar :index.sync="selectIndex">
+      <tabbar-item selected @click="selectIndex = 0">
         <img slot="icon" src="../assets/images/app/icon_nav_msg.png">
         <span slot="label">消息</span>
       </tabbar-item>
-      <tabbar-item @click="this.selectIndex=1">
+      <tabbar-item @click="selectIndex = 1">
         <img slot="icon" src="../assets/images/app/icon_nav_actionSheet.png">
         <span slot="label">应用</span>
       </tabbar-item>
-      <tabbar-item @click="this.selectIndex=2">
+      <tabbar-item @click="selectIndex = 2">
         <img slot="icon" src="../assets/images/app/icon_nav_cell.png">
         <span slot="label">我</span>
       </tabbar-item>
-    </tabbar>
+  </tabbar>
+
+
+
   </div>
 </template>
 
@@ -91,7 +95,8 @@
  import Group from 'vux-components/group'
  import Cell from 'vux-components/cell'
  import Card from 'vux-components/card'
-
+ import Swiper from 'vux-components/swiper'
+ import SwiperItem from 'vux-components/swiper-item'
  import common from './utils/common';
 
 
@@ -146,7 +151,9 @@ export default {
     Spinner,
     Cell,
     Group,
-    Card
+    Card,
+    Swiper,
+    SwiperItem
   },
   route: {
     data (transition) {

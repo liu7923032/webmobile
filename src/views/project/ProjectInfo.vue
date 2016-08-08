@@ -8,7 +8,7 @@
 			<tab-item :selected="selectIndex === 0" @click="selectIndex = 0">
 				基本信息
 			</tab-item>
-			<tab-item :selected="selectIndex === 2" @click="selectIndex = 2">
+			<tab-item :selected="selectIndex === 1" @click="selectIndex = 12">
 				文档列表
 			</tab-item>
 		</tab>

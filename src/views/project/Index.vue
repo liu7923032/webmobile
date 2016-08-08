@@ -14,9 +14,9 @@
 				我参与项目
 			</tab-item>
 		</tab>
-		<div class="weui_tab_bd">
-			<!-- 我主导的项目 -->
-			<div v-show="selectIndex==0" class="subdb">
+
+		<swiper :index.sync="selectIndex" :dots-class="custom" height="521px" :show-dots="false">
+			<swiper-item class="swiperItem">
 				<div class="box2">
 					<cell v-for="item in mainData" is-link v-link="'/project/projectinfo/'+item.value">
 						<div slot="after-title">
@@ -26,10 +26,8 @@
 				</div>
 				<x-button @click="mainMore" v-show="showMainBtn">点击加载更多</x-button>
 				<div v-show="!showMainBtn" style="padding:10px 15px;color:blue;border:1px solid whitesmoke;">已经加载到最后了(●'◡'●)</div>
-			</div>
-			<!-- 我参与的项目 -->
-			<div v-show="selectIndex==1" class="subdb">>
-					<!--content slot-->
+			</swiper-item>
+			<swiper-item class="swiperItem">
 				<div class="box2">
 					<cell v-for="item in partData" is-link v-link="'/project/projectinfo/'+item.value">
 						<div slot="after-title">
@@ -39,8 +37,8 @@
 				</div>
 				<x-button @click="partMore" v-show="showPartBtn">点击加载更多</x-button>
 				<div v-show="!showPartBtn" style="padding:10px 15px;color:blue;border:1px solid whitesmoke;">已经加载到最后了(●'◡'●)</div>
-			</div>
-		</div>
+			</swiper-item>
+		</swiper>
 	</div>
 </template>
 
@@ -53,7 +51,8 @@
     import Box from 'vux-components/box'
     import XButton from 'vux-components/x-button'
 	import {Tab,TabItem} from 'vux-components/tab'
-
+	import Swiper from 'vux-components/swiper'
+	import SwiperItem from 'vux-components/swiper-item'
 	// import {Tab,TabItem,XHeader,Cell,Box,XButton} from 'vux-components'
 
 	export default {
@@ -117,7 +116,8 @@
 			}
 		},
 		components:{
-			Tab,TabItem,XHeader,Cell,Box,XButton
+			Tab,TabItem,XHeader,Cell,Box,XButton,
+			Swiper,SwiperItem
 		},
 		route: {
 			data (transition) {
