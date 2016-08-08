@@ -232,8 +232,5 @@
 	}
 	
 	
-	.swiperItem{
-		overflow:auto;
-		padding-bottom:40px;;
-	}
+	
 </style>

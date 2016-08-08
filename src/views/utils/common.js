@@ -74,7 +74,7 @@ const common = {
 			timestamp: timestamp, // 必填，生成签名的时间戳
 			nonceStr: nonceStr, // 必填，生成签名的随机串
 			signature: signature,// 必填，签名，见附录1
-			jsApiList: ["getNetworkType", "chooseImage", "previewImage", "uploadImage", "scanQRCode"]
+			jsApiList: ["getNetworkType", "chooseImage", "previewImage", "uploadImage", "scanQRCode","getLocation"]
 		};
 		if (localStorage) {
 			localStorage.setItem('wxcfg', JSON.stringify(wxObj));

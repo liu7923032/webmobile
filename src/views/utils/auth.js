@@ -12,6 +12,9 @@ const auth={
 			sessionStorage.setItem("user",JSON.stringify(user));
 		}
 	},
+	updateUser (lat,long) {
+		
+	},
 	getTicket(){
 		var user=auth.getUser();
 		if(user){

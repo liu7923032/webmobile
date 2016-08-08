@@ -23,11 +23,14 @@ import filters from './filters/filters'
 import common from './views/utils/common'
 
 
+
 Vue.use(Router)
 Vue.use(VueResource)
 
 // 初始化过滤器
 Object.keys(filters).forEach(k => Vue.filter(k, filters[k]))
+
+
 
 // 1:设置访问的地址
 Vue.http.options.root = 'http://e.mdsd.cn:9000/api';
@@ -106,8 +109,12 @@ Vue.http.interceptors.push(function () {
                         return false;
                     }
                 });
+                if(localStorage){
+                    var location= localStorage.getItem("location");
+                    request.headers["Location"] = location;
+                }
+               
             }
-
             if (this.$root && this.$root.loading) {
                 this.$root.loading = { show: true, text: '加载中...' };
             }

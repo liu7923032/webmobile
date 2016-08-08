@@ -27,6 +27,7 @@
 
     import auth from './views/utils/auth.js'
     import common from './views/utils/common.js'
+    import wxUtils from './views/utils/wxUtils'
 
     export default {
       data () {
@@ -48,7 +49,14 @@
             var ticketUrl=common.getUrlParam("ticket");
             var account=common.getUrlParam("account");
             var sign=common.getUrlParam("sign");
-            console.log("sign:"+sign);
+            //得到当前的登陆信息
+            if(wx){
+                //记录当前人员的精度和维度
+                wxUtils.getLocation(function(lat,lang){
+                    //设置用户信息
+                    auth.updateUser(lat,long);
+                });
+            }
            
             if(ticketUrl.length>10){
                 //设置用户登录信息
@@ -184,6 +192,11 @@
         background-color: #fff;
         height: 100%;
     }
+
+    .swiperItem{
+		overflow:auto;
+		padding-bottom:20px;;
+	}
     /*a{
        text-decoration:none;
     }
