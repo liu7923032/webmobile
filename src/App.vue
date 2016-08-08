@@ -11,9 +11,7 @@
         <loading :show.sync="loading.show" :text="loading.text">
         </loading>
 
-        <dialog :show.sync="showDialog">
-            <p>{{dialog.text}}</p>
-        </dialog>
+       
     </div>
 </template>
 
@@ -24,6 +22,7 @@
 
     import Toast from 'vux-components/toast'
     import Loading from 'vux-components/loading'
+    import Alert from 'vux-components/alert'
 
     import auth from './views/utils/auth.js'
     import common from './views/utils/common.js'
@@ -35,16 +34,16 @@
            ticket:'',
            loading:{ show:false,text:'加载中'},
            toast: { show:false, type:'cancel',text:'网络连接失败'},
-           dialog:{ show:false,text:""},
-           showDialog:false
+           alert:{ show:false,text:""}
         }
       },
       components:{
         Toast,
-        Loading
-        
+        Loading,
+        Alert
       },
       created () {
+            console.log("App初始化");
             //检查请求地址是否包含tickt,如果包含那么就代表用户是通过微信登陆
             var ticketUrl=common.getUrlParam("ticket");
             var account=common.getUrlParam("account");

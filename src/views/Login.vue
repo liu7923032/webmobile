@@ -83,7 +83,6 @@
 		},
 		methods:{
 			login () {
-				console.log("发起登陆请求");
 				//向服务器发起请登录请求
 				if(this.account.length!=5){
 					// this.errorMsg="账号必须是五位";
@@ -91,13 +90,13 @@
 					this.$root.dialog={show:true,text:'长度要5位'};
 					return false;
 				}
+				
 				if(this.pwd.length<3){
 					// this.errorMsg="密码最小长度是三位:"+this.getVersion().android;
 					this.$root.dialog={show:true,text:'密码长度最短要3位'};
 					return;
 				}
-				
-				console.log("测试");
+
 				//向服务器发起请求
 				this.$http.get("auth",{"account":this.account,"passwd":this.pwd,"device":this.device}).then((response)=>{
 					var data=response.data;

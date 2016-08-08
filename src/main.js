@@ -10,7 +10,7 @@ import routerMap from './routers'
 
 
 //加载数据请求组件
-import VueResource from 'vue-resource'
+var VueResource = require('vue-resource');
 
 import auth from './views/utils/auth'
 //
@@ -34,18 +34,22 @@ Object.keys(filters).forEach(k => Vue.filter(k, filters[k]))
 
 // 1:设置访问的地址
 Vue.http.options.root = 'http://e.mdsd.cn:9000/api';
+// 2:启用emulateJSON选项，可以让浏览器不发送OPTIONS预请求
+// Vue.http.options.emulateJSON = true;
+// Vue.http.options.emulateHttp = true;
 // Vue.http.options.root = 'http://localhost:9001/api';
-// 2:设置拦截器
+// 3:设置拦截器
 // Vue.http.interceptors.push((request, next) => {
-//     console.log(Vue);
-//     this.$root.loading = { show: true, text: '加载中...' };
+//     console.log(this);
+//     App.loading = { show: true, text: '加载中...' };
 //     //在每次请求之前都加上人员的验证
 //     request.headers["Authorization"] = "BasicAuth " + auth.getTicket();
 //     next((response) => {
-//         this.$root.loading = { show: false, text: '' };
+        
+//         App.loading = { show: false, text: '' };
 //         // 1：如果返回失败,那么就返回错误代码
 //         if (!response.ok) {
-//             this.$root.dialog={type:'cancel',text:"错误代码:"+response.status}
+//             App.dialog={type:'cancel',text:"错误代码:"+response.status}
 //         }
 //         // 2：如果请求成功，那么久检查是否存在json结果
 //         return response
