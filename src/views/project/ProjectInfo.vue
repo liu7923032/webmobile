@@ -16,7 +16,7 @@
 			<swiper-item class="swiperItem">
 				<div style="padding-bottom:120px;">
 					<group :title="ProjectName">
-						<cell title="医院名称">
+						<cell title="医院名称" >
 							<div slot="value">
 								<span style="color: green">{{HospName}}</span>
 							</div>
