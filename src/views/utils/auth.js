@@ -13,6 +13,7 @@ const auth={
 		}
 	},
 	updateUser (lat,long) {
+		//记录人员的登陆信息
 		
 	},
 	getTicket(){

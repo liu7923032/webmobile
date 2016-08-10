@@ -1,22 +1,22 @@
 <template>
   <div class="page" transition="app">
     <x-header :left-options="{showBack: false}">
-        首页
-       <a slot="right" href="javascript:void(0)" @click.prevent="scan" >扫描</a>
+      首页
+      <a slot="right" href="javascript:void(0)" @click.prevent="scan">扫描</a>
     </x-header>
 
     <swiper :index.sync="selectIndex" :dots-class="custom" height="521px" :show-dots="false">
-			<swiper-item class="swiperItem">
-				 <div class="box2">
-             <card v-for="item in msgItems" :header="{title:item.MsgTitle}" >
-                <div slot="content"  class="card_bd">
-                    {{item.MsgContent}}
-                </div>
-            </card>
-          </div>
-			</swiper-item>
-			<swiper-item class="swiperItem">
-				<flexbox :gutter="0" wrap="wrap">
+      <swiper-item class="swiperItem">
+        <div class="box2">
+          <card v-for="item in msgItems" :header="{title:item.MsgTitle}">
+            <div slot="content" class="card_bd">
+              {{item.MsgContent}}
+            </div>
+          </card>
+        </div>
+      </swiper-item>
+      <swiper-item class="swiperItem">
+        <flexbox :gutter="0" wrap="wrap">
           <flexbox-item :span="1/3" v-for="item in items" v-link="'/'+item.link">
             <div class="grid">
               <img :src="item.image" alt="">
@@ -24,9 +24,9 @@
             </div>
           </flexbox-item>
         </flexbox>
-			</swiper-item>
+      </swiper-item>
       <swiper-item class="swiperItem">
-          <Group title="个人基本信息">
+        <Group title="个人基本信息">
           <cell title="工号">
             <div slot="value">
               <span style="color: green">{{user.GongHao}}</span>
@@ -59,7 +59,7 @@
           </cell>
         </Group>
       </swiper-item>
-		</swiper>
+    </swiper>
 
     <tabbar :index.sync="selectIndex">
       <tabbar-item selected @click="selectIndex = 0">
@@ -74,7 +74,7 @@
         <img slot="icon" src="../assets/images/app/icon_nav_cell.png">
         <span slot="label">我</span>
       </tabbar-item>
-  </tabbar>
+    </tabbar>
 
 
 
@@ -97,8 +97,8 @@
  import Card from 'vux-components/card'
  import Swiper from 'vux-components/swiper'
  import SwiperItem from 'vux-components/swiper-item'
- import common from './utils/common';
-
+ import common from './utils/common'
+ import wxUtils from './utils/wxUtils'
 
 export default {
   name: 'index',
@@ -167,7 +167,10 @@ export default {
     }
   },
   ready () {
-      common.initWX();
+      wxUtils.getLocation((lat,long)=>{
+          this.$http.post("Common/Login",{"latitude":lat,"longitude":long}).then((res)=>{
+          })
+      });
   },
   methods: {
     update () {
@@ -201,11 +204,10 @@ export default {
 </script>
 
 <style scoped>
-
-  .card_bd{
-    padding:10px 15px;
+  .card_bd {
+    padding: 10px 15px;
   }
-
+  
   .page-bd>.title {
     width: 100%;
     text-align: center;

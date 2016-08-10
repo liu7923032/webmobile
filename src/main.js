@@ -1,27 +1,12 @@
-
 import FastClick from 'fastclick'
-
 import Vue from 'vue'
-
 import Router from 'vue-router'
-//配置路由规则
 import routerMap from './routers'
-
-
-
-//加载数据请求组件
-var VueResource = require('vue-resource');
-
+import VueResource from 'vue-resource'
 import auth from './views/utils/auth'
-//
 import App from './App.vue'
-
-
-
 import filters from './filters/filters'
-
 import common from './views/utils/common'
-
 
 
 Vue.use(Router)
@@ -31,30 +16,64 @@ Vue.use(VueResource)
 Object.keys(filters).forEach(k => Vue.filter(k, filters[k]))
 
 
-
 // 1:设置访问的地址
-Vue.http.options.root = 'http://e.mdsd.cn:9000/api';
+Vue.http.options.root = 'http://e.mdsd.cn:9000/api'
 // 2:启用emulateJSON选项，可以让浏览器不发送OPTIONS预请求
-// Vue.http.options.emulateJSON = true;
-// Vue.http.options.emulateHttp = true;
 // Vue.http.options.root = 'http://localhost:9001/api';
+// Vue.http.options.emulateJSON = true
+Vue.http.options.emulateHTTP = true
+
 // 3:设置拦截器
-// Vue.http.interceptors.push((request, next) => {
-//     console.log(this);
-//     App.loading = { show: true, text: '加载中...' };
-//     //在每次请求之前都加上人员的验证
-//     request.headers["Authorization"] = "BasicAuth " + auth.getTicket();
-//     next((response) => {
-        
-//         App.loading = { show: false, text: '' };
-//         // 1：如果返回失败,那么就返回错误代码
-//         if (!response.ok) {
-//             App.dialog={type:'cancel',text:"错误代码:"+response.status}
-//         }
-//         // 2：如果请求成功，那么久检查是否存在json结果
-//         return response
-//     });
-// });
+Vue.http.interceptors.push(function (request, next) {
+    var that = this;
+    //检查是否网络存在,通过网络来检查是否在线
+    if (wx) {
+        wx.getNetworkType({
+            success: function (res) {
+            },
+            fail: function (res) {
+                that.$root.toast = { show: true, text: "网络连接失败", type: 'cancel' };
+                return false;
+            }
+        });
+        if (localStorage) {
+            var location = localStorage.getItem("location");
+            request.headers["Location"] = location;
+        }
+
+    }
+    if (this.$root && this.$root.loading) {
+        this.$root.loading = { show: true, text: '加载中...' };
+    }
+    //在每次请求之前都加上人员的验证
+    request.headers["Authorization"] = "BasicAuth " + auth.getTicket();
+    //在每次请求之前都加上人员的验证
+
+    next((response) => {
+        //1:取消进度条显示
+        if (this.$root && this.$root.loading && this.$root.loading.show) {
+            this.$root.loading = { show: false, text: '' }
+        }
+
+        //对返回的结果提前检查
+        if (response.status == 401) {
+            router.redirect('/login');
+        } else if (response.status == 0) {
+            this.$root.toast = { show: true, type: 'cancel', text: '网络连接失败' }
+            return false;
+            // console.log("网络连接失败");
+        }
+        var resData = response.data;
+        // 检查返回的结果是否异常
+        if (typeof (resData) == "object") {
+            if (resData.Statu && resData.Statu == "N") {
+                this.$root.toast = { show: true, type: 'cancel', text: resData.Msg }
+                return false;
+            }
+        }
+        return response;
+    });
+});
 
 
 
@@ -68,10 +87,13 @@ Vue.http.options.root = 'http://e.mdsd.cn:9000/api';
 // 稍后我们会讲解嵌套路由
 //注册路由
 var router = new Router({
+    // hashbang: true,
     history: false,
-    saveScrollPosition: false
-});
-routerMap(router);
+    saveScrollPosition: true,
+    // suppressTransitionError: true
+})
+
+routerMap(router)
 
 //消除click延迟
 if ('addEventListener' in document) {
@@ -98,64 +120,60 @@ router.beforeEach(transition => {
 });
 
 
-// // 发送请求和返回的拦截器
-Vue.http.interceptors.push(function () {
-    return {
-        request: function (request) {
-            var that = this;
-            //检查是否网络存在,通过网络来检查是否在线
-            if (wx) {
-                wx.getNetworkType({
-                    success: function (res) {
-                    },
-                    fail: function (res) {
-                        that.$root.toast = { show: true, text: "网络连接失败", type: 'cancel' };
-                        return false;
-                    }
-                });
-                if(localStorage){
-                    var location= localStorage.getItem("location");
-                    request.headers["Location"] = location;
-                }
-               
-            }
-            if (this.$root && this.$root.loading) {
-                this.$root.loading = { show: true, text: '加载中...' };
-            }
-            //在每次请求之前都加上人员的验证
-            request.headers["Authorization"] = "BasicAuth " + auth.getTicket();
-            return request;
-        },
-        response: function (response) {
-            //1:取消进度条显示
-            if (this.$root && this.$root.loading && this.$root.loading.show) {
-                this.$root.loading = { show: false, text: '' }
-            }
+// // // 发送请求和返回的拦截器
+// Vue.http.interceptors.push(function () {
+//     return {
+//         request: function (request) {
+//             var that = this;
+//             //检查是否网络存在,通过网络来检查是否在线
+//             if (wx) {
+//                 wx.getNetworkType({
+//                     success: function (res) {
+//                     },
+//                     fail: function (res) {
+//                         that.$root.toast = { show: true, text: "网络连接失败", type: 'cancel' };
+//                         return false;
+//                     }
+//                 });
+//                 if (localStorage) {
+//                     var location = localStorage.getItem("location");
+//                     request.headers["Location"] = location;
+//                 }
 
-            //对返回的结果提前检查
-            if (response.status == 401) {
-                router.redirect('/login');
-            } else if (response.status == 0) {
-                this.$root.toast = { show: true, type: 'cancel', text: '网络连接失败' }
-                return false;
-                // console.log("网络连接失败");
-            }
-            var resData = response.data;
-            // 检查返回的结果是否异常
-            if (typeof (resData) == "object") {
-                if (resData.Statu && resData.Statu == "N") {
-                    this.$root.toast = { show: true, type: 'cancel', text: resData.Msg }
-                    return false;
-                }
-            }
-            return response;
-        }
-    };
-});
+//             }
+//             if (this.$root && this.$root.loading) {
+//                 this.$root.loading = { show: true, text: '加载中...' };
+//             }
+//             //在每次请求之前都加上人员的验证
+//             request.headers["Authorization"] = "BasicAuth " + auth.getTicket();
+//             return request;
+//         },
+//         response: function (response) {
+//             //1:取消进度条显示
+//             if (this.$root && this.$root.loading && this.$root.loading.show) {
+//                 this.$root.loading = { show: false, text: '' }
+//             }
 
-
-
-
+//             //对返回的结果提前检查
+//             if (response.status == 401) {
+//                 router.redirect('/login');
+//             } else if (response.status == 0) {
+//                 this.$root.toast = { show: true, type: 'cancel', text: '网络连接失败' }
+//                 return false;
+//                 // console.log("网络连接失败");
+//             }
+//             var resData = response.data;
+//             // 检查返回的结果是否异常
+//             if (typeof (resData) == "object") {
+//                 if (resData.Statu && resData.Statu == "N") {
+//                     this.$root.toast = { show: true, type: 'cancel', text: resData.Msg }
+//                     return false;
+//                 }
+//             }
+//             return response;
+//         }
+//     };
+// })
 
 
 

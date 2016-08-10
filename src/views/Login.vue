@@ -98,24 +98,17 @@
 				}
 
 				//向服务器发起请求
-				this.$http.get("auth",{"account":this.account,"passwd":this.pwd,"device":this.device}).then((response)=>{
-					var data=response.data;
-					if(data.Statu=="Y"){
+				this.$http.get("auth", { params: { "account": this.account, "passwd": this.pwd, "device": this.device } }).then((response) => {
+					var data = response.data;
+					if (data.Statu == "Y") {
 						//保存用户信息到数据库中
-						auth.setUser(this.account,data.Data,this.isremeber);
+						auth.setUser(this.account, data.Data, this.isremeber);
 						//跳转到首页
 						this.$router.go("/mobile");
-						// console.log("我的测试:"+this.$route);
-						// if(this.redirectUrl&&this.redirectUrl.length>0){
-						// 	this.$route.router.go(this.redirectUrl);
-						// }
-						// else{
-						// 	this.$route.router.go("index");
-						// }
-					}else{
-						this.$root.dialog={show:true,text:data.Msg};
+					} else {
+						this.$root.dialog = { show: true, text: data.Msg };
 					}
-					
+
 				});
 			},
 			getVersion(){

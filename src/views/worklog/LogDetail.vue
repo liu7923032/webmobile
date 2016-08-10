@@ -9,7 +9,7 @@
 				<datetime :value.sync="eTime" format="YYYY-MM-DD HH:mm" title="结束时间" confirm-text="完成" cancel-text="取消"></datetime>
 			</group>
 			<group title="内容信息">
-				<popup-picker title="工作类型" :columns="1" :data="typeOptions" :value.sync="wType" show-name></popup-picker>
+				<popup-picker title="工作类型"  :data="typeOptions" :value.sync="wType" show-name></popup-picker>
 				<cell title="选择项目" v-show="showPro" is-link @click="showPop">
 					<span slot="value">{{ projectName | substr 10 true }}</span>
 				</cell>
@@ -207,7 +207,6 @@
 					postData["ProjectCode"]=proCode;
 				}
 
-				
 
 				this.$http.post("WorkLog",JSON.stringify(postData)).then((success)=>{
 					//提示保存成功

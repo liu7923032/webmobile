@@ -143,10 +143,10 @@ import wxutils from '../utils/wxUtils'
                 contactUser:"",
                 // 故障类别
                 categorys:[["故障报修","系统巡检"]],
-                category:[],
+                category:["故障报修"],
                 // 处理方式
                 methods:[["现场处理","远程处理"]],
-                execMethod:[],
+                execMethod:["现场处理"],
                 // 附件上传
                 fileCount:0,
                 showfile:false,
@@ -294,10 +294,10 @@ import wxutils from '../utils/wxUtils'
                 this.dispNo="";
                 this.strProduct="";
                 this.contactUser="";
-                this.execMethod=[];
+                this.execMethod=["现场处理"];
                 this.productList=[];
                 this.Users=[];
-                this.category=[];
+                this.category=["故障报修"];
                 this.fileCount=0;
                 this.solution="";
                 this.desc="";
@@ -335,6 +335,7 @@ import wxutils from '../utils/wxUtils'
             // 编辑信息保存
             saveData () {
                 var formData=this.getFormData();
+                 console.log(formData);
                  if(!formData){
                     this.$root.toast={type:'cancel',text:'请完善必填信息',show:true};
                     return false;

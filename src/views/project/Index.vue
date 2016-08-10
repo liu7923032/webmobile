@@ -80,7 +80,7 @@
 			},
 			mainMore () {
 				var _this=this;
-				_this.$http.get('Project/GetByPage',{type:0,pageIndex:_this.mainIndex}).then((response)=>{
+				_this.$http.get('Project/GetByPage',{params:{type:0,pageIndex:_this.mainIndex}}).then((response)=>{
 					var jsonData=response.data;
 					if(jsonData.length==0){
 						_this.showMainBtn=false;
@@ -98,7 +98,7 @@
 			},
 			partMore () {
 				var _this=this;
-				_this.$http.get('Project/GetByPage',{type:1,pageIndex:_this.partIndex}).then((response)=>{
+				_this.$http.get('Project/GetByPage',{params:{type:1,pageIndex:_this.partIndex}}).then((response)=>{
 					var jsonData=response.data;
 					if(jsonData.length==0){
 						_this.showPartBtn=false;

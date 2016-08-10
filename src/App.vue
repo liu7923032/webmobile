@@ -11,7 +11,7 @@
         <loading :show.sync="loading.show" :text="loading.text">
         </loading>
 
-       
+
     </div>
 </template>
 
@@ -43,19 +43,10 @@
         Alert
       },
       created () {
-            console.log("App初始化");
             //检查请求地址是否包含tickt,如果包含那么就代表用户是通过微信登陆
             var ticketUrl=common.getUrlParam("ticket");
             var account=common.getUrlParam("account");
             var sign=common.getUrlParam("sign");
-            //得到当前的登陆信息
-            if(wx){
-                //记录当前人员的精度和维度
-                wxUtils.getLocation(function(lat,lang){
-                    //设置用户信息
-                    auth.updateUser(lat,long);
-                });
-            }
            
             if(ticketUrl.length>10){
                 //设置用户登录信息
@@ -63,8 +54,8 @@
             }
             if(sign.length>0){
                 var signArray=sign.split('|');
-                common.setWXCfg(signArray[0],signArray[1],signArray[2],signArray[3]);
-               
+                wxUtils.setWXCfg(signArray[0],signArray[1],signArray[2],signArray[3]);
+                
             }
             //检查是否登陆
             if(auth.isLogin()){
@@ -191,11 +182,12 @@
         background-color: #fff;
         height: 100%;
     }
-
-    .swiperItem{
-		overflow:auto;
-		padding-bottom:20px;;
-	}
+    
+    .swiperItem {
+        overflow: auto;
+        padding-bottom: 20px;
+        ;
+    }
     /*a{
        text-decoration:none;
     }
