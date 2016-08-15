@@ -5,7 +5,7 @@
             <a slot="right" @click="newFlow">发起</a>
         </x-header>
         <div class="weui-tab-bd">
-             <card v-for="item in waitData" :header="{title:'流程编号:'+item.FlowNumber}" :footer="{title:'审批流程',link:'/component/panel'}">
+             <card v-for="item in waitData" :header="{title:'流程编号:'+item.FlowNumber}" :footer="{title:'审批流程',link:'/workflow/approve/'+item.InstNo}">
                 <div slot="content" class="card_bd" >
                     {{item.InstName}}
                     <div  class="flow_info">

@@ -25,6 +25,7 @@ const wxUtils = {
                     return;
                 }
                 if (typeof (success) == "function") {
+                    console.log(" 成功进入调用getLocation api的接口")
                     success();
                 }
             }

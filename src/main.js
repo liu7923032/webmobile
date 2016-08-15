@@ -9,17 +9,26 @@ import filters from './filters/filters'
 import common from './views/utils/common'
 
 
+
+//消除click延迟
+if ('addEventListener' in document) {
+    document.addEventListener('DOMContentLoaded', function () {
+        FastClick.attach(document.body);
+    }, false);
+}
+
+
+
 Vue.use(Router)
 Vue.use(VueResource)
 
 // 初始化过滤器
 Object.keys(filters).forEach(k => Vue.filter(k, filters[k]))
 
-
 // 1:设置访问的地址
-Vue.http.options.root = 'http://e.mdsd.cn:9000/api'
+// Vue.http.options.root = 'http://e.mdsd.cn:9000/api'
 // 2:启用emulateJSON选项，可以让浏览器不发送OPTIONS预请求
-// Vue.http.options.root = 'http://localhost:9001/api';
+Vue.http.options.root = 'http://localhost:9001/api';
 // Vue.http.options.emulateJSON = true
 Vue.http.options.emulateHTTP = true
 
@@ -95,12 +104,7 @@ var router = new Router({
 
 routerMap(router)
 
-//消除click延迟
-if ('addEventListener' in document) {
-    document.addEventListener('DOMContentLoaded', function () {
-        FastClick.attach(document.body);
-    }, false);
-}
+
 
 
 //权限检查
@@ -118,65 +122,6 @@ router.beforeEach(transition => {
         transition.next();
     }
 });
-
-
-// // // 发送请求和返回的拦截器
-// Vue.http.interceptors.push(function () {
-//     return {
-//         request: function (request) {
-//             var that = this;
-//             //检查是否网络存在,通过网络来检查是否在线
-//             if (wx) {
-//                 wx.getNetworkType({
-//                     success: function (res) {
-//                     },
-//                     fail: function (res) {
-//                         that.$root.toast = { show: true, text: "网络连接失败", type: 'cancel' };
-//                         return false;
-//                     }
-//                 });
-//                 if (localStorage) {
-//                     var location = localStorage.getItem("location");
-//                     request.headers["Location"] = location;
-//                 }
-
-//             }
-//             if (this.$root && this.$root.loading) {
-//                 this.$root.loading = { show: true, text: '加载中...' };
-//             }
-//             //在每次请求之前都加上人员的验证
-//             request.headers["Authorization"] = "BasicAuth " + auth.getTicket();
-//             return request;
-//         },
-//         response: function (response) {
-//             //1:取消进度条显示
-//             if (this.$root && this.$root.loading && this.$root.loading.show) {
-//                 this.$root.loading = { show: false, text: '' }
-//             }
-
-//             //对返回的结果提前检查
-//             if (response.status == 401) {
-//                 router.redirect('/login');
-//             } else if (response.status == 0) {
-//                 this.$root.toast = { show: true, type: 'cancel', text: '网络连接失败' }
-//                 return false;
-//                 // console.log("网络连接失败");
-//             }
-//             var resData = response.data;
-//             // 检查返回的结果是否异常
-//             if (typeof (resData) == "object") {
-//                 if (resData.Statu && resData.Statu == "N") {
-//                     this.$root.toast = { show: true, type: 'cancel', text: resData.Msg }
-//                     return false;
-//                 }
-//             }
-//             return response;
-//         }
-//     };
-// })
-
-
-
 
 // 现在我们可以启动应用了！
 // 路由器会创建一个 App 实例，并且挂载到选择符 #app 匹配的元素上。

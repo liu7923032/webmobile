@@ -11,11 +11,14 @@ import LogDetail from './views/worklog/LogDetail.vue'
 import CService from './views/cservice/Index.vue'
 import NewCSWork from './views/cservice/NewCSWork.vue'
 import WorkFlow from './views/workflow/Index.vue'
+import Approve from './views/workflow/approve.vue'
+
 import Notice from './views/notice/Index.vue'
 import Known from './views/known/Index.vue'
 import WorkLog from './views/worklog/Index.vue'
 
-export default function(router) {
+
+export default function (router) {
     router.map({
         '/': { //首页
             name: 'index',
@@ -34,24 +37,24 @@ export default function(router) {
             auth: true,
             component: Project
         },
-        '/project/projectinfo/:id':{
+        '/project/projectinfo/:id': {
             name: 'proinfo',
             auth: true,
             component: ProjectInfo
         },
-        '/project/upfile/:id':{
-            name:'upfile',
-            auth:true,
-            component:UpFile
+        '/project/upfile/:id': {
+            name: 'upfile',
+            auth: true,
+            component: UpFile
         },
         //客服
-        '/cservice':{
+        '/cservice': {
             name: 'cservice',
             auth: true,
             component: CService
         },
-         //客服
-        '/cservice/newcswork':{
+        //客服
+        '/cservice/newcswork': {
             name: 'newcswork',
             auth: true,
             component: NewCSWork
@@ -62,23 +65,23 @@ export default function(router) {
             auth: true,
             component: WorkLog
         },
-        '/worklog/loginfo/:date':{
-            name:'loginfo',
+        '/worklog/loginfo/:date': {
+            name: 'loginfo',
             auth: true,
             component: LogInfo
         },
-        '/worklog/logdetail/:date':{
-            name:'logdetail',
+        '/worklog/logdetail/:date': {
+            name: 'logdetail',
             auth: true,
             component: LogDetail
         },
-        '/notice':{
-            name:'notice',
+        '/notice': {
+            name: 'notice',
             auth: true,
             component: Notice
         },
-        '/notice/noticeinfo/:no':{
-            name:'noticeinfo',
+        '/notice/noticeinfo/:no': {
+            name: 'noticeinfo',
             auth: true,
             component: require('./views/notice/NoticeInfo.vue')
         },
@@ -87,6 +90,11 @@ export default function(router) {
             name: 'workflow',
             auth: true,
             component: WorkFlow
+        },
+        '/workflow/approve/:instNo': {
+            name: 'approve',
+            auth: true,
+            component: Approve
         },
         // 登陆页面
         '/login': {
