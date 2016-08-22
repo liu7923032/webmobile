@@ -25,20 +25,19 @@
                         <p>到达:{{item.CreateTime | substr 13}} 审批:{{item.ApproveDate}}</p>
                         <p>意见:{{item.Comment}}</p>
                     </timeline-item>
-
                 </timeline>
                 <divider>签核过程</divider>
                 <!--签核操作-->
                 <flexbox>
-                    <flexbox-item :span="1/2">
+                    <flexbox-item >
                         <box gap="10px 10px">
                             <x-button type="warn" @click="reject">
                                 驳回
                             </x-button>
                         </box>
                     </flexbox-item>
-                    <flexbox-item :span="1/2">
-                        <box gap="10px 10px">
+                    <flexbox-item >
+                        <box gap="10px">
                             <x-button type="primary" @click="approve">
                                 签核
                             </x-button>
@@ -63,8 +62,8 @@
     import Box from 'vux-components/box' 
     import XButton from 'vux-components/x-button'
     import {Timeline,TimelineItem} from 'vux-components/timeline'
-  import Divider from 'vux-components/divider'
-  
+    import Divider from 'vux-components/divider'
+    import FlowUtils from '../utils/flowUtils'
     export default {
         data () {
             return {
@@ -81,7 +80,7 @@
         },
         route:{
             data (transtion) {
-                   console.log(transtion)
+                console.log(transtion)
                 this.instNo=transtion.to.params.instNo;
              
                 // 1:加载签核步骤
@@ -127,16 +126,29 @@
                     case 0:
                          return "reject"
                     case 1:
-                        return "yes"
+                        return "success"
                     break;
                     case 4:
                         return "deliver"
                     case 5:
-                        return "close"
+                        return "warn"
                 }
             },
             approve () {
-                alert('11')
+                var http=this.$http;
+                var flowUtils= new FlowUtils({
+                        instNo:this.instNo,
+                        events:{
+                            success:function(){
+
+                            },
+                            // 加载用户数据
+                            userData:function(data){
+                                alert(data);
+                            }
+                        }
+                    },http)
+                flowUtils.showNextUser();
             },
             reject () {
                 alert("12")
@@ -166,8 +178,25 @@
             color: #666;
             font-weight: normal;
         }
-        .recent {
-            color: rgb(4, 190, 2)
+        /*待处理*/
+        .wait{
+            color:#31B0D5;
+        }
+
+        .success{
+            color:#449D44;
+        }
+
+        .deliver{
+            color:#286090;
+        }
+
+        .warn{
+            color:#EC971F;
+        }
+
+        .reject{
+            color:#C9302C;
         }
     }
 </style>

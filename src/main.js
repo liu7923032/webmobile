@@ -28,7 +28,7 @@ Object.keys(filters).forEach(k => Vue.filter(k, filters[k]))
 // 1:设置访问的地址
 // Vue.http.options.root = 'http://e.mdsd.cn:9000/api'
 // 2:启用emulateJSON选项，可以让浏览器不发送OPTIONS预请求
-Vue.http.options.root = 'http://localhost:9001/api';
+Vue.http.options.root = 'http://localhost:9001/api'
 // Vue.http.options.emulateJSON = true
 Vue.http.options.emulateHTTP = true
 

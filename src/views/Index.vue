@@ -177,19 +177,19 @@ export default {
     update () {
     },
     scan () {
-      // wx.scanQRCode({
-      //   needResult: 1,
-      //   desc: '扫描测试',
-      //   success: function (res) {
-      //     alert("扫描成功");
-      //     // alert(JSON.stringify(res));
-      //   }
-      // });
-       wxUtils.getLocation((lat,long)=>{
-            alert("得到的维度:"+lat+",得到的精度:"+long);
-            this.$http.post("Common/Login",{"latitude":lat,"longitude":long}).then((res)=>{
-            })
-        });
+      wx.scanQRCode({
+        needResult: 1,
+        desc: '扫描测试',
+        success: function (res) {
+          alert("扫描成功");
+          // alert(JSON.stringify(res));
+        }
+      });
+      //  wxUtils.getLocation((lat,long)=>{
+      //       // alert("得到的维度:"+lat+",得到的精度:"+long);
+      //       this.$http.post("Common/Login",{"latitude":lat,"longitude":long}).then((res)=>{
+      //       })
+      //   });
     },
     onItemClick (a) {
     },

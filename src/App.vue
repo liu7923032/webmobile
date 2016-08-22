@@ -55,7 +55,10 @@
             if(sign.length>0){
                 var signArray=sign.split('|');
                 wxUtils.setWXCfg(signArray[0],signArray[1],signArray[2],signArray[3]);
-                
+                // wxUtils.getLocation((lat,long)=>{
+                //     this.$http.post("Common/Login",{"latitude":lat,"longitude":long}).then((res)=>{
+                //     })
+                // });
             }
             //检查是否登陆
             if(auth.isLogin()){

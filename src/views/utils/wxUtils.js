@@ -80,6 +80,9 @@ const wxUtils = {
                     if (localStorage) {
                         localStorage.setItem("location", JSON.stringify({ lat: latitude, long: longitude }));
                     }
+                },
+                fail:function(){
+                    alert("调用失败");
                 }
             });
         });
